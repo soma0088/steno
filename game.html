@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Milk & Motherhood Quiz</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fdf6f0;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      overflow-x: hidden;
+      background-image: url(videos/baby1.gif);
+    }
+    header, footer {
+      background-color: #ffb6b9;
+      opacity: 0.7;
+      color: #fff;
+      padding: 2%;
+      
+    }
+    main {
+      padding: 2em;
+      position: relative;
+      min-height: 400px;
+    }
+    .quiz-card {
+      background: #fff;
+      opacity: 0.8;
+      padding: 1.5em;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 500px;
+      margin: 2em auto;
+    }
+    button {
+      margin: 1em 0;
+      padding: 0.75em 2em;
+      font-size: 1em;
+      border: none;
+      border-radius: 5px;
+      background-color: #ffb6b9;
+      color: white;
+      cursor: pointer;
+    }
+    .option {
+      display: block;
+      margin: 0.5em auto;
+    }
+    .result {
+      font-weight: bold;
+      margin-top: 1em;
+    }
+
+    #avatar {
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      transition: top 1s ease;
+      z-index: 10;
+    }
+
+    .happy {
+      top: 100px;
+    }
+
+    .sad {
+      top: 300px;
+    }
+
+    .flash-button{
+      margin-top: 10%;
+      margin-right: 80%;
+    }
+/* bryster og mælke produktion */
+.ml16 {
+  color: #402d2d;
+  padding:2%;
+  font-weight: 800;
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 0.5em;
+  overflow: hidden;
+}
+
+.ml16 .letter {
+  display: inline-block;
+  line-height: 1em;
+}
+
+
+  </style>
+</head>
+<body>
+  <header>
+ 
+    <h1 class="ml16">Bryster og mælke produktion</h1>
+
+  <a href="index.html" class="flash-button"> <img src="assets/home1.png" alt="Girl in a jacket" width="20%" height="20%"></a>
+  </header>
+
+  <main>
+    <!-- <img id="avatar" src="videos/happy.gif" alt="Avatar" /> -->
+    <div class="quiz-card">
+      <div id="question">Loading...</div>
+      <div id="options"></div>
+      <div class="result" id="result"></div>
+      <button id="restartBtn" style="display:none;" onclick="restartQuiz()">Restart Quiz</button>
+    </div>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+
+  <script>
+    const quiz = [
+      {
+        question: "What hormone primarily triggers milk production?",
+        options: ["Oxytocin", "Prolactin", "Estrogen", "Insulin"],
+        answer: "Prolactin"
+      },
+      {
+        question: "Which hormone is responsible for the 'let-down' reflex?",
+        options: ["Testosterone", "Prolactin", "Oxytocin", "Serotonin"],
+        answer: "Oxytocin"
+      },
+      {
+        question: "Colostrum is...",
+        options: [
+          "A type of infant formula",
+          "The first milk produced after birth",
+          "A hormone",
+          "A muscle in the breast"
+        ],
+        answer: "The first milk produced after birth"
+      }
+    ];
+
+    let currentQuestion = parseInt(localStorage.getItem('questionIndex') || 0);
+    let score = parseInt(localStorage.getItem('score') || 0);
+
+    function loadQuestion() {
+      if (currentQuestion >= quiz.length) {
+        document.getElementById("question").textContent = "Quiz Completed!";
+        document.getElementById("options").innerHTML = "";
+        document.getElementById("result").textContent = `Final Score: ${score} / ${quiz.length}`;
+        // document.getElementById("avatar").className = "happy";
+        document.getElementById("restartBtn").style.display = "inline-block";
+        return;
+      }
+
+      const q = quiz[currentQuestion];
+      document.getElementById("question").textContent = q.question;
+      const optionsDiv = document.getElementById("options");
+      optionsDiv.innerHTML = "";
+      document.getElementById("result").textContent = "";
+      // document.getElementById("avatar").className = "";
+      document.getElementById("restartBtn").style.display = "none";
+
+      q.options.forEach(option => {
+        const btn = document.createElement("button");
+        btn.textContent = option;
+        btn.classList.add("option");
+        btn.onclick = () => checkAnswer(option);
+        optionsDiv.appendChild(btn);
+      });
+    }
+
+    function checkAnswer(selected) {
+      const correct = quiz[currentQuestion].answer;
+      const resultDiv = document.getElementById("result");
+      // const avatar = document.getElementById("avatar");
+
+      if (selected === correct) {
+        resultDiv.textContent = "✅ Correct!";
+        // avatar.className = "happy";
+        score++;
+        localStorage.setItem('score', score);
+      } else {
+        resultDiv.textContent = `❌ Incorrect. The correct answer was: ${correct}`;
+        // avatar.className = "sad";
+      }
+
+      currentQuestion++;
+      localStorage.setItem('questionIndex', currentQuestion);
+
+      setTimeout(loadQuestion, 3000);
+    }
+
+    function restartQuiz() {
+      localStorage.removeItem('questionIndex');
+      localStorage.removeItem('score');
+      currentQuestion = 0;
+      score = 0;
+      loadQuestion();
+    }
+
+    loadQuestion();
+
+
+
+    //Bryster og mælke produktion
+    // Wrap every letter in a span
+var textWrapper = document.querySelector('.ml16');
+textWrapper.innerHTML = textWrapper.textContent.replace(/\S/g, "<span class='letter'>$&</span>");
+
+anime.timeline({loop: true})
+  .add({
+    targets: '.ml16 .letter',
+    translateY: [-100,0],
+    easing: "easeOutExpo",
+    duration: 1400,
+    delay: (el, i) => 30 * i
+  }).add({
+    targets: '.ml16',
+    opacity: 0,
+    duration: 1000,
+    easing: "easeOutExpo",
+    delay: 1000
+  });
+
+
+
+  </script>
+</body>
+</html>

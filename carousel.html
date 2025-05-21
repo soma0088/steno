@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>3D Video Carousel</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <a href="index.html" class="flash-button"> <img src="assets/home1.png" alt="Girl in a jacket"width="80%" height="80%"></a>
+
+
+  <div class="scene">
+    <div class="carousel" id="carousel">
+      <div class="carousel__cell" data-video="videos/video1.mp4">1.Hvad er bryster?</div>
+      <div class="carousel__cell" data-video="videos/video2.mp4">2.udvikling</div>
+      <div class="carousel__cell" data-video="videos/video3.mp4">3.Mælkekirtler</div>
+      <div class="carousel__cell" data-video="videos/video4.mp4">4.mælke produktion</div>
+      <div class="carousel__cell" data-video="videos/video5.mp4">5.Brystmyter</div>
+      <div class="carousel__cell" data-video="videos/video6.mp4">6.Brystershelbred</div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <button id="prev">◀</button>
+    <button id="next">▶</button>
+  </div>
+
+  <!-- Modal for video -->
+  <div id="videoModal" class="modal hidden">
+    <video controls autoplay id="videoPlayer">
+      <source src="" type="video/mp4">
+      Your browser does not support HTML5 video.
+    </video>
+    <button id="closeModal">✖</button>
+
+    <audio id="background-music" autoplay loop>
+      <source src="assets/funny-kids-cartoon-background-music-333104.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+  <audio id="background-music" loop>
+    <source src="assets/funny-kids-cartoon-background-music-333104.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+  
+  <div style="margin-top: 10px;">
+    <button onclick="playMusic()">Play</button>
+    <button onclick="pauseMusic()">Pause</button>
+    <label for="volume">Volume:</label>
+    <input type="range" id="volume" min="0" max="1" step="0.01" onchange="setVolume(this.value)">
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

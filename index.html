@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Breast and Milk Production</title>
+  <link rel="stylesheet" href="style.css" />
+  
+  <style>
+   
+  </style>
+</head>
+<body>
+  <header>
+    <h1>BRYSTER OG MÆLKE produktion</h1>
+    <!-- <p>Immersive science learning for teens</p> -->
+  </header>
+  <!-- <section class="intro">
+    <p>Welcome to an engaging journey through the science of breasts and milk production. Designed for teens aged 13-19, this experience combines interactive learning, visuals, and games to make science fun and respectful.</p>
+  </section> -->
+  <section class="interactive-section">
+    <div class="interactive-box">
+      <h2>ANIME</h2>
+
+      <button onclick="location.href='anime.html'">Start Exploring</button>
+    </div>
+    <div class="interactive-box">
+      <h2>SPIL</h2>
+
+      <button onclick="location.href='game.html'">Play Game</button>
+    </div>
+    <div class="interactive-box">
+      <h2>VIDEO</h2>
+
+
+      <button onclick="window.location.href='carousel.html'">VIDEO</button>
+
+
+    </div>
+  </section>
+  <!-- <footer>
+    &copy; 2025 Breast and Milk Production Project | Powered by Steno Museum
+  </footer> -->
+  <script> const quiz = [
+    {
+      question: "What hormone primarily triggers milk production?",
+      options: ["Oxytocin", "Prolactin", "Estrogen", "Insulin"],
+      answer: "Prolactin"
+    },
+    {
+      question: "Which hormone is responsible for the 'let-down' reflex?",
+      options: ["Testosterone", "Prolactin", "Oxytocin", "Serotonin"],
+      answer: "Oxytocin"
+    },
+    {
+      question: "Colostrum is...",
+      options: [
+        "A type of infant formula",
+        "The first milk produced after birth",
+        "A hormone",
+        "A muscle in the breast"
+      ],
+      answer: "The first milk produced after birth"
+    }
+  ];
+
+  let currentQuestion = parseInt(localStorage.getItem('questionIndex') || 0);
+  let score = parseInt(localStorage.getItem('score') || 0);
+
+  function loadQuestion() {
+    if (currentQuestion >= quiz.length) {
+      document.getElementById("question").textContent = "Quiz Completed!";
+      document.getElementById("options").innerHTML = "";
+      document.getElementById("result").textContent = `Final Score: ${score} / ${quiz.length}`;
+      document.getElementById("avatar").className = "happy";
+      return;
+    }
+
+    const q = quiz[currentQuestion];
+    document.getElementById("question").textContent = q.question;
+    const optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+    document.getElementById("result").textContent = "";
+    document.getElementById("avatar").className = "";
+
+    q.options.forEach(option => {
+      const btn = document.createElement("button");
+      btn.textContent = option;
+      btn.classList.add("option");
+      btn.onclick = () => checkAnswer(option);
+      optionsDiv.appendChild(btn);
+    });
+  }
+
+  function checkAnswer(selected) {
+    const correct = quiz[currentQuestion].answer;
+    const resultDiv = document.getElementById("result");
+    const avatar = document.getElementById("avatar");
+
+    if (selected === correct) {
+      resultDiv.textContent = "✅ Correct!";
+      avatar.className = "happy";
+      score++;
+      localStorage.setItem('score', score);
+    } else {
+      resultDiv.textContent = `❌ Incorrect. The correct answer was: ${correct}`;
+      avatar.className = "sad";
+    }
+
+    currentQuestion++;
+    localStorage.setItem('questionIndex', currentQuestion);
+
+    setTimeout(loadQuestion, 3000);
+  }
+
+  loadQuestion();
+  
+  
+  function startQuiz() {
+      localStorage.setItem('score', 0);
+      localStorage.setItem('questionIndex', 0);
+      window.location.href = 'quiz.html';
+    }
+  
+  </script>
+</body>
+</html>
